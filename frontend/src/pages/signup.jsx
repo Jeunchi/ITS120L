@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'
-import logo from '../assets/mapua_logo.svg'
-import { Link } from 'react-router-dom'
-import validation from './SignupValidation'
-
+import { useNavigate } from 'react-router-dom';
+import logo from '../assets/mapua_logo.svg';
+import { Link } from 'react-router-dom';
+import validation from './SignupValidation';
 
 function Signup() {
   const [values, setValues] = useState({
@@ -16,14 +15,23 @@ function Signup() {
   const[errors,setErrors] = useState({})
   
   const handleInput = (event) => {
-    setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
-  }
+    setValues(prev => ({...prev, [event.target.name]: event.target.value})) // Remove the square brackets
+}
 
-  const handleSubmit =(event) => {
-    event.preventDefault();
-    setErrors(validation(values));
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const validationErrors = validation(values);
+  setErrors(validationErrors);
 
+  if (validationErrors.name === "" && validationErrors.email === "" && validationErrors.password === "") {
+      axios.post('http://localhost:8081/signup', values)
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
   }
+}
+
+
+
 const navigate=useNavigate();
 
       return (
@@ -57,16 +65,17 @@ const navigate=useNavigate();
                   {errors.email && <span className='text-danger'> {errors.email}</span>}
                   </div>
 
-                  <div className='mb-3'>
-                  <label className="text-white text-2xl self-start px-2">Password</label>
+                  <div className="mb-3">
+                  <label htmlFor="password" 
+                    className="text-white">Password</label>
                   <input type="password" 
-                    placeholder="Enter password" 
+                    placeholder="Enter Password" 
                     name='password'
-                    onChange={handleInput}
                     className="form-control bg-gray-300 rounded-full w-80 h-9 px-3"
-                  />
+                    onChange={handleInput}
+                    />
                   {errors.password && <span className='text-danger'> {errors.password}</span>}
-                  </div>
+                </div>
                   
                     <button className="btn btn-success w-100 rounded-full">Sign in</button>
                   
