@@ -1,10 +1,10 @@
 class UserModel {
   constructor(user) {
+    this.firstname = user.firstname;
+    this.lastname = user.lastname;
     this.username = user.username;
-    this.email = user.email;
-    this.mobile = user.mobile;
+    this.employeenumber = user.employeenumber;
     this.password = user.password;
-    this.userType=user.userType;
   }
 }
 export default UserModel;

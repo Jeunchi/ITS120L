@@ -12,7 +12,7 @@ const pool=mysql2.createPool({
     connectionLimit:10,
     queueLimit:0,
     waitForConnections:true
-});
+}); 
 
 const checkConnection=async()=>{
     try {

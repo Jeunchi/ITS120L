@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/mapua_logo.svg'
 
+
 function Signup() {
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState({
@@ -18,10 +19,29 @@ function Signup() {
         setFormValues({...formValues,[name]:value});
     }
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=async (e)=>{
         e.preventDefault();
         console.log(formValues);
-    }
+
+        try {
+          const response = await axios.post("http://localhost:3000/api/auth/register-user", formValues);
+          console.log(response, 'res');
+    
+          if (response.data.success) {
+
+              setFormValues({username:"",email:"",mobile:"",password:""});
+
+          } else {
+
+          }
+      } catch (error) {
+          console.error('Error during registration:', error);
+
+      }
+        
+        
+    
+      }
 
     return (
       <div class="flex flex-col h-screen bg-gray-950 place-content-center">
@@ -84,8 +104,14 @@ function Signup() {
                             />
 
                         <div class="flex place-content-center mt-4 gap-2">
-                            <button type="submit" onClick={() => navigate('/Login')} class="text-black cursor-pointer font-bold rounded-full bg-yellow-300 px-6 h-9 w-35 hover:scale-105 delay-120 duration-250 ease-in-out">Back</button>
-                            <button type="submit" class="text-black cursor-pointer font-bold rounded-full bg-green-400 px-6 h-9 w-35 hover:scale-105 delay-120 duration-250 ease-in-out">Sign Up</button>
+                            <button type="submit" 
+                                onClick={() => navigate('/Login')} 
+                                class="text-black cursor-pointer font-bold rounded-full bg-yellow-300 px-6 h-9 w-35 hover:scale-105 delay-120 duration-250 ease-in-out">Back</button>
+                            
+                            <button type="submit" 
+                                class="text-black cursor-pointer font-bold rounded-full bg-green-400 px-6 h-9 w-35 hover:scale-105 delay-120 duration-250 ease-in-out">
+                                    Sign Up
+                            </button>
                         </div>
 
                     </form>

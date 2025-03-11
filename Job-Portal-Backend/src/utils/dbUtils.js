@@ -4,9 +4,9 @@ const userTableQuery = `CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
-    emplyeenumber VARCHAR(100) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL,
+    employeenumber VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL, -- Add password field; using VARCHAR(255) for hashed passwords
-    userType ENUM('user','admin') DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );`;
 
