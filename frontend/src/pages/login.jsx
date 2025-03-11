@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
 import { Link } from 'react-router-dom';
 import validation from './LoginValidation';
+import axios from 'axios';
 
 function Login() {
   const [values, setValues] = useState({
@@ -10,18 +11,34 @@ function Login() {
     password: ''
   })
 
+
+  const navigate=useNavigate();
+
   const[errors,setErrors] = useState({})
   
   const handleInput = (event) => {
     setValues(prev => ({...prev, [event.target.name]: event.target.value}))
   }
 
-  const handleSubmit =(event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setErrors(validation(values));
-
+    const validationErrors = validation(values);
+    setErrors(validationErrors);
+    
+    if(Object.keys(validationErrors).length === 0 || 
+       (validationErrors.email === "" && validationErrors.password === "")) {
+      axios.post('http://localhost:8081/login', values)
+      .then(res => {
+        if(res.data === "Success"){
+          navigate('/home');
+        } else {
+          alert("No record existed");
+        }
+      })
+      .catch(err => console.log(err));
+    }
   }
-const navigate=useNavigate();
+
 
     return (
       <div className="flex flex-col bg-gray-950 place-content-center ">

@@ -1,3 +1,4 @@
+//server.js
 const express = require("express");
 const mysql = require('mysql');
 const cors = require('cors');
@@ -13,21 +14,47 @@ const db = mysql.createConnection({
     database: "signup"
 })
 
-app.post('/signup',(req, res) =>{
-    const sql = "INSERT INTO login ('name', 'email' , 'password') VALUES (?)";
+app.post('/signup', (req, res) => {
+    const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
     const values = [
         req.body.name,
         req.body.email,
         req.body.password
-    ]
+    ];
     db.query(sql, [values], (err, data) => {
-        if(err) {
-            return res.json("Error");
+        if (err) {
+            console.error("Query Error: ", err);
+            return res.status(500).json({ message: "Database query failed", error: err });
         }
+        console.log("Data Inserted: ", data);
         return res.json(data);
-    }) 
-})
+    });
+});
+
+app.post('/login', (req, res) => {
+    const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+    db.query(sql, [req.body.email,req.body.password ], (err, data) => {
+        if (err) {
+            console.error("Query Error: ", err);
+            return res.status(500).json({ message: "Database query failed", error: err });
+        }
+        if(data.length > 0) {
+            return res.json("Success");
+        } else {
+            return res.json("Failed");
+        }
+    });
+});
+
 
 app.listen(8081, ()=> {
     console.log("listening")
 })
+
+db.connect((err) => {
+    if (err) {
+        console.error("Database connection failed: ", err);
+    } else {
+        console.log("Connected to the database");
+    }
+});
