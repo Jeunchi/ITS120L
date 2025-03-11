@@ -24,7 +24,7 @@ function Login() {
 const navigate=useNavigate();
 
     return (
-      <div className="flex flex-col bg-gray-950 place-content-center ">
+      <div className="flex flex-col bg-gray-950 place-content-center h-screen">
         <div className="flex flex-col place-items-center text-center gap-7">
             <img src={logo} className="flex h-98 w-150" />
             <h2 className="text-white">MAPUA LIBRARY</h2>
