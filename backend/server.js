@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -12,7 +13,7 @@ const db = mysql.createConnection({
     database: "signup"
 })
 
-app.post('/pages/signup',(req, res) =>{
+app.post('/signup',(req, res) =>{
     const sql = "INSERT INTO login ('name', 'email' , 'password') VALUES (?)";
     const values = [
         req.body.name,

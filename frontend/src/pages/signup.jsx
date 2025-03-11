@@ -11,28 +11,27 @@ function Signup() {
     email: '',
     password: ''
   })
-
+  const navigate=useNavigate();
   const[errors,setErrors] = useState({})
   
   const handleInput = (event) => {
     setValues(prev => ({...prev, [event.target.name]: event.target.value})) // Remove the square brackets
 }
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  const validationErrors = validation(values);
-  setErrors(validationErrors);
-
-  if (validationErrors.name === "" && validationErrors.email === "" && validationErrors.password === "") {
+  const handleSubmit =(event) => {
+    event.preventDefault();
+    setErrors(validation(values));
+    
+    if(errors.name === "" && errors.email === ""&& errors.password === "") {
       axios.post('http://localhost:8081/signup', values)
-          .then(res => console.log(res))
-          .catch(err => console.log(err));
+      .then(res => {
+        navigate('/');
+      })
+      .catch(err => console.log(err));
+    }
+
   }
-}
 
-
-
-const navigate=useNavigate();
 
       return (
         <div className="flex flex-col bg-gray-950 place-content-center">
