@@ -3,6 +3,8 @@ const express = require("express");
 const mysql = require('mysql');
 const cors = require('cors');
 
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -13,6 +15,8 @@ const db = mysql.createConnection({
     password: "",
     database: "signup"
 })
+
+
 
 app.post('/signup', (req, res) => {
     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
@@ -61,34 +65,71 @@ app.get('/records', async (req, res) => {
 });
 
 app.get('/userperhour', async (req, res) => {
-    const sql = "SELECT Date, TimeRange, ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usercountsperhour";
+    // Use explicit casting if needed
+    const sql = `
+        SELECT 
+            Date, 
+            TimeRange, 
+            CAST(ABM AS SIGNED) as ABM, 
+            CAST(ACMAN AS SIGNED) as ACMAN,
+            CAST(ADA AS SIGNED) as ADA,
+            CAST(AMPSY AS SIGNED) as AMPSY,
+            CAST(BIO AS SIGNED) as BIO,
+            CAST(BMCS AS SIGNED) as BMCS,
+            CAST(CS AS SIGNED) as CS,
+            CAST(CE AS SIGNED) as CE,
+            CAST(CS_O AS SIGNED) as CS_O,
+            CAST(IE AS SIGNED) as IE,
+            CAST(IE_O AS SIGNED) as IE_O,
+            CAST(\`IS\` AS SIGNED) as \`IS\`,
+            CAST(IT AS SIGNED) as IT,
+            CAST(GrandTotal AS SIGNED) as GrandTotal
+        FROM usercountsperhour
+    `;
     
     db.query(sql, (err, data) => {
         if (err) {
             console.error("Database Query Error:", err);
-            return res.json({ error: err.sqlMessage });
+            return res.status(500).json({ error: err.message });
         }
         
-        console.log("Fetched Data from Database:", data); // Debugging
+        console.log("Sample database record:", data[0]);
         return res.json(data);
     });
 });
 
-
-app.get('/userpercourse', async (req, res) => {
-    const sql = "SELECT Date ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usercountsperhour";
+app.get('/usersperprogram', async (req, res) => {
+    // Use explicit casting if needed
+    const sql = `
+        SELECT 
+            Date, 
+            CAST(ABM AS SIGNED) as ABM, 
+            CAST(ACMAN AS SIGNED) as ACMAN,
+            CAST(ADA AS SIGNED) as ADA,
+            CAST(AMPSY AS SIGNED) as AMPSY,
+            CAST(BIO AS SIGNED) as BIO,
+            CAST(BMCS AS SIGNED) as BMCS,
+            CAST(CS AS SIGNED) as CS,
+            CAST(CE AS SIGNED) as CE,
+            CAST(CS_O AS SIGNED) as CS_O,
+            CAST(IE AS SIGNED) as IE,
+            CAST(IE_O AS SIGNED) as IE_O,
+            CAST(\`IS\` AS SIGNED) as \`IS\`,
+            CAST(IT AS SIGNED) as IT,
+            CAST(GrandTotal AS SIGNED) as GrandTotal
+        FROM usersperprogram
+    `;
     
     db.query(sql, (err, data) => {
         if (err) {
             console.error("Database Query Error:", err);
-            return res.json({ error: err.sqlMessage });
+            return res.status(500).json({ error: err.message });
         }
         
-        console.log("Fetched Data from Database:", data); // Debugging
+        console.log("Sample database record:", data[0]);
         return res.json(data);
     });
 });
-
 app.listen(8081, ()=> {
     console.log("listening")
 })

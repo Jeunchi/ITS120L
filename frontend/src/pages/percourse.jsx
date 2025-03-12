@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/mapua_logo.svg';
 import './Records.css';
 import CsvDownloader from 'react-csv-downloader';
 
-
-function percourse() {
+function PerCourse() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:8081/userpercourse')
+        fetch('http://localhost:8081/usersperprogram')
             .then(res => res.json())
             .then(data => {
                 console.log("Frontend received data:", data); // Debugging log
@@ -25,56 +23,57 @@ function percourse() {
             });
     }, []);
     
-    
-    const filteredData = data.filter(record => 
-        record.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.course?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Modified filter function to match your data structure
+    const filteredData = searchTerm === '' ? data : data.filter(record => {
+        // Convert all values to strings and check if any contains the search term
+        return Object.values(record).some(val => 
+            val !== null && 
+            val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <div className="records-page">
-      {/* Navigation Bar */}
-      <header className="bg-red-800 text-yellow-500 py-4 px-6 flex justify-between items-center">
-        <h1 className="font-serif font-bold text-3xl md:text-4xl">MAPUA MAKATI LIBRARY</h1>
-        <nav className="flex gap-6">
-            <Link 
-            to="/home" 
-            className="font-medium hover:underline text-lg text-decoration-none"
-          >
-            <p className="text-yellow-500 ">Home</p>
-          </Link>
-          <Link 
-            to="/percourse" 
-            className="font-medium hover:underline text-lg text-decoration-none"
-          >
-            <p className="text-yellow-500 ">Per Program</p>
-          </Link>
-          <Link 
-            to="/perhour" 
-            className="font-medium hover:underline text-lg text-decoration-none"
-          >
-            <p className="text-yellow-500 ">Per Hour</p>
-          </Link>
-          <Link 
-            to="/records" 
-            className="font-medium hover:underline text-lg text-decoration-none"
-          >
-            <p className="text-yellow-500 ">Student log</p>
-          </Link>
-        </nav>
-      </header>
+            {/* Navigation Bar */}
+            <header className="bg-red-800 text-yellow-500 py-4 px-6 flex justify-between items-center">
+                <h1 className="font-serif font-bold text-3xl md:text-4xl">MAPUA MAKATI LIBRARY</h1>
+                <nav className="flex gap-6">
+                    <Link 
+                        to="/home" 
+                        className="font-medium hover:underline text-lg text-decoration-none"
+                    >
+                        <p className="text-yellow-500">Home</p>
+                    </Link>
+                    <Link 
+                        to="/percourse" 
+                        className="font-medium hover:underline text-lg text-decoration-none"
+                    >
+                        <p className="text-yellow-500">Per Program</p>
+                    </Link>
+                    <Link 
+                        to="/perhour" 
+                        className="font-medium hover:underline text-lg text-decoration-none"
+                    >
+                        <p className="text-yellow-500">Per Hour</p>
+                    </Link>
+                    <Link 
+                        to="/records" 
+                        className="font-medium hover:underline text-lg text-decoration-none"
+                    >
+                        <p className="text-yellow-500">Student log</p>
+                    </Link>
+                </nav>
+            </header>
             
-
             {/* Main content area */}
             <div className="records-content">
                 <div className="records-container">
-                    <h2 className="records-title">Student Records</h2>
+                    <h2 className="records-title">Student Records Per Program</h2>
                     
                     <div className="search-bar">
                         <input 
                             type="text" 
-                            placeholder="Search by name, email, or course..." 
+                            placeholder="Search records..." 
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -108,40 +107,40 @@ function percourse() {
                                     {filteredData.length > 0 ? (
                                         filteredData.map((d, index) => (
                                             <tr key={index}>
-                                                <td>{new Date(d.date).toLocaleDateString()}</td>
-                                                <td className="year-cell">{d.ABM}</td>
-                                                <td className="year-cell">{d.ACMAN}</td>
-                                                <td className="year-cell">{d.ADA}</td>
-                                                <td className="year-cell">{d.AMPSY}</td>
-                                                <td className="year-cell">{d.BIO}</td>
-                                                <td className="year-cell">{d.BMCS}</td>
-                                                <td className="year-cell">{d.CS}</td>
-                                                <td className="year-cell">{d.CE}</td>
-                                                <td className="year-cell">{d.CS_O}</td>
-                                                <td className="year-cell">{d.IE}</td>
-                                                <td className="year-cell">{d.IE_O}</td>
-                                                <td className="year-cell">{d.IS}</td>
-                                                <td className="year-cell">{d.IT}</td>
-                                                <td className="year-cell">{d.GrandTotal}</td>
+                                                <td>{new Date(d.Date).toLocaleDateString()}</td>
+                                                <td className="year-cell">{d.ABM || 0}</td>
+                                                <td className="year-cell">{d.ACMAN || 0}</td>
+                                                <td className="year-cell">{d.ADA || 0}</td>
+                                                <td className="year-cell">{d.AMPSY || 0}</td>
+                                                <td className="year-cell">{d.BIO || 0}</td>
+                                                <td className="year-cell">{d.BMCS || 0}</td>
+                                                <td className="year-cell">{d.CS || 0}</td>
+                                                <td className="year-cell">{d.CE || 0}</td>
+                                                <td className="year-cell">{d.CS_O || 0}</td>
+                                                <td className="year-cell">{d.IE || 0}</td>
+                                                <td className="year-cell">{d.IE_O || 0}</td>
+                                                <td className="year-cell">{d.IS || 0}</td>
+                                                <td className="year-cell">{d.IT || 0}</td>
+                                                <td className="year-cell">{d.GrandTotal || 0}</td>
                                             </tr>    
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="16" className="no-records">No records found</td>
+                                            <td colSpan="15" className="no-records">No records found</td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
                             <CsvDownloader 
-                                filename="student_perhour.csv"
+                                filename="student_percourse.csv"
                                 extension=".csv"
                                 separator=","
                                 wrapColumnChar='"'
                                 columns={[
-                                    { id: 'date', displayName: 'Date' },
-                                    { id: 'TimeRange', displayName: 'TimeRange' },
+                                    { id: 'Date', displayName: 'Date' },
                                     { id: 'ABM', displayName: 'ABM' },
                                     { id: 'ACMAN', displayName: 'ACMAN' },
+                                    { id: 'ADA', displayName: 'ADA' },
                                     { id: 'AMPSY', displayName: 'AMPSY' },
                                     { id: 'BIO', displayName: 'BIO' },
                                     { id: 'BMCS', displayName: 'BMCS' },
@@ -151,12 +150,12 @@ function percourse() {
                                     { id: 'IE', displayName: 'IE' },
                                     { id: 'IE_O', displayName: 'IE_O' },
                                     { id: 'IS', displayName: 'IS' },
-                                    { id: 'IT', displayName: 'AITBM' },
+                                    { id: 'IT', displayName: 'IT' },
                                     { id: 'GrandTotal', displayName: 'GrandTotal' },
                                 ]}
                                 datas={filteredData.map(record => ({
                                     ...record,
-                                    date: new Date(record.date).toLocaleDateString()
+                                    Date: new Date(record.Date).toLocaleDateString()
                                 }))} 
                             >
                                 <button className="mt-4 w-full px-6 py-3 bg-yellow-500 text-black font-semibold rounded-b-lg shadow-md hover:bg-yellow-400 transition duration-300">
@@ -187,4 +186,4 @@ function percourse() {
     );
 }
 
-export default percourse;
+export default PerCourse;

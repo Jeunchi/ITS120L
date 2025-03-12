@@ -15,7 +15,9 @@ function perhour() {
         fetch('http://localhost:8081/userperhour')
             .then(res => res.json())
             .then(data => {
-                console.log("Frontend received data:", data); // Debugging log
+                // Debug the exact structure
+                console.log("Sample data:", JSON.stringify(data[0], null, 2));
+                console.log("Data keys:", Object.keys(data[0]));
                 setData(data);
                 setLoading(false);
             })
@@ -25,13 +27,18 @@ function perhour() {
             });
     }, []);
     
+// First, update your filter logic to match your actual data fields:
+const filteredData = searchTerm === '' ? data : data.filter(record => 
+    // Search in fields that actually exist in your data
+    (record.TimeRange && record.TimeRange.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    String(record.ABM).includes(searchTerm) ||
+    String(record.ACMAN).includes(searchTerm) ||
+    String(record.ADA).includes(searchTerm) ||
+    // Add other fields as needed
+    String(record.GrandTotal).includes(searchTerm)
+);
+console.log("Filtered data for rendering:", filteredData);
     
-    const filteredData = data.filter(record => 
-        record.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.course?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
     return (
         <div className="records-page">
       {/* Navigation Bar */}
@@ -84,6 +91,7 @@ function perhour() {
                         <div className="loading">Loading records...</div>
                     ) : (
                         <div className="table-container">
+                            
                             <table className="records-table">
                                 <thead>
                                     <tr>
@@ -106,32 +114,33 @@ function perhour() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredData.length > 0 ? (
-                                        filteredData.map((d, index) => (
-                                            <tr key={index}>
-                                                <td>{new Date(d.date).toLocaleDateString()}</td>
-                                                <td className="year-cell">{d.TimeRange}</td>
-                                                <td className="year-cell">{d.ABM}</td>
-                                                <td className="year-cell">{d.ACMAN}</td>
-                                                <td className="year-cell">{d.ADA}</td>
-                                                <td className="year-cell">{d.AMPSY}</td>
-                                                <td className="year-cell">{d.BIO}</td>
-                                                <td className="year-cell">{d.BMCS}</td>
-                                                <td className="year-cell">{d.CS}</td>
-                                                <td className="year-cell">{d.CE}</td>
-                                                <td className="year-cell">{d.CS_O}</td>
-                                                <td className="year-cell">{d.IE}</td>
-                                                <td className="year-cell">{d.IE_O}</td>
-                                                <td className="year-cell">{d.IS}</td>
-                                                <td className="year-cell">{d.IT}</td>
-                                                <td className="year-cell">{d.GrandTotal}</td>
-                                            </tr>    
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="16" className="no-records">No records found</td>
-                                        </tr>
-                                    )}
+                                {filteredData.length > 0 ? (
+                                    filteredData.map((d, index) => (
+                                        <tr key={index}>
+                                            <td>{new Date(d.date || d.Date).toLocaleDateString()}</td>
+                                            <td className="year-cell">{d.TimeRange}</td>
+                                            <td className="year-cell">{parseInt(d.ABM) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.ACMAN) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.ADA) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.AMPSY) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.BIO) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.BMCS) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.CS) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.CE) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.CS_O) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.IE) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.IE_O) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.IS) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.IT) || 0}</td>
+                                            <td className="year-cell">{parseInt(d.GrandTotal) || 0}</td>
+                                        </tr>    
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="16" className="no-records">No records found</td>
+                                    </tr>
+                                )}
+
                                 </tbody>
                             </table>
                             <CsvDownloader 
