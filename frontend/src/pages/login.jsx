@@ -38,31 +38,31 @@ function Login() {
   };
   
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <div className="w-full max-w-md p-8 bg-gray-800 rounded-lg shadow-md">
         <div className="flex flex-col items-center mb-6">
           <img src={logo} alt="Mapua Logo" className="h-16 mb-2" />
-          <h1 className="text-2xl font-bold text-red-800">MAPUA LIBRARY</h1>
+          <h1 className="text-white text-2xl font-bold">MAPUA LIBRARY</h1>
         </div>
         
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
+            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="email">
+              Username
             </label>
             <input 
               type="email" 
               name="email" 
               id="email" 
               onChange={handleInput}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="Enter your email"
+              className="w-full px-3 py-2 border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your username"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
           
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input 
@@ -70,26 +70,25 @@ function Login() {
               name="password" 
               id="password"
               onChange={handleInput}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               placeholder="Enter your password"
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
           
-          <button 
-            type="submit" 
-            className="w-full bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 mb-4"
-          >
-            Log in
-          </button>
-          
-          <div className="text-center">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-red-800 hover:underline font-medium">
-                Sign up
-              </Link>
-            </p>
+          <div className="flex space-x-2 mb-4">
+            <Link 
+              to="/signup" 
+              className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-300 text-center"
+            >
+              Sign Up
+            </Link>
+            <button 
+              type="submit" 
+              className="flex-1 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300"
+            >
+              Login
+            </button>
           </div>
         </form>
       </div>

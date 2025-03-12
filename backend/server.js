@@ -76,7 +76,7 @@ app.get('/userperhour', async (req, res) => {
 
 
 app.get('/userpercourse', async (req, res) => {
-    const sql = "SELECT Date ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usersperprogram";
+    const sql = "SELECT Date ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usercountsperhour";
     
     db.query(sql, (err, data) => {
         if (err) {
