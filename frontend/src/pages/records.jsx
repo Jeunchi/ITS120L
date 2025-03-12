@@ -8,8 +8,12 @@ function Records() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [fadeIn, setFadeIn] = useState(false);
 
     useEffect(() => {
+        // Start fade in animation after component mounts
+        setFadeIn(true);
+        
         setLoading(true);
         fetch('http://localhost:8081/records')
             .then(res => res.json())
@@ -31,9 +35,9 @@ function Records() {
     );
 
     return (
-        <div className="records-page">
+        <div className={`records-page ${fadeIn ? 'fade-in' : ''}`}>
       {/* Navigation Bar */}
-      <header className="bg-red-800 text-yellow-500 py-4 px-6 flex justify-between items-center">
+      <header className="bg-red-800 text-yellow-500 py-4 px-6 flex justify-between items-center fade-in-element">
         <h1 className="font-serif font-bold text-3xl md:text-4xl">MAPUA MAKATI LIBRARY</h1>
         <nav className="flex gap-6">
             <Link 
@@ -63,13 +67,12 @@ function Records() {
         </nav>
       </header>
             
-
             {/* Main content area */}
-            <div className="records-content">
+            <div className="records-content fade-in-element">
                 <div className="records-container">
                     <h2 className="records-title">Student Records</h2>
                     
-                    <div className="search-bar">
+                    <div className="search-bar fade-in-element">
                         <input 
                             type="text" 
                             placeholder="Search by name, email, or course..." 
@@ -79,9 +82,9 @@ function Records() {
                     </div>
                     
                     {loading ? (
-                        <div className="loading">Loading records...</div>
+                        <div className="loading fade-in-element">Loading records...</div>
                     ) : (
-                        <div className="table-container">
+                        <div className={`table-container fade-in-element ${searchTerm ? 'fade-update' : ''}`}>
                             <table className="records-table">
                                 <thead>
                                     <tr>
@@ -98,7 +101,7 @@ function Records() {
                                 <tbody>
                                     {filteredData.length > 0 ? (
                                         filteredData.map((d, index) => (
-                                            <tr key={index}>
+                                            <tr key={index} className="table-row-fade">
                                                 <td>{d.id}</td>
                                                 <td className="name-cell">{d.name}</td>
                                                 <td>{d.email}</td>
@@ -140,21 +143,17 @@ function Records() {
                                     Download CSV
                                 </button>
                             </CsvDownloader>
-
-
-
-
                         </div>
                     )}
                     
-                    <div className="records-footer-stats">
+                    <div className="records-footer-stats fade-in-element">
                         <p>Total Records: {filteredData.length}</p>
                     </div>
                 </div>
             </div>
 
             {/* Footer */}
-            <footer className="site-footer">
+            <footer className="site-footer fade-in-element">
                 <div className="footer-container">
                     <div className="footer-left">
                         <Link to="https://library.mapua.edu.ph/About/Default.aspx" className="footer-link">About</Link>
