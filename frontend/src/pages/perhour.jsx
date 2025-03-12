@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
 import './Records.css';
+import CsvDownloader from 'react-csv-downloader';
+
 
 function perhour() {
     const [data, setData] = useState([]);
@@ -132,6 +134,37 @@ function perhour() {
                                     )}
                                 </tbody>
                             </table>
+                            <CsvDownloader 
+                                filename="student_perhour.csv"
+                                extension=".csv"
+                                separator=","
+                                wrapColumnChar='"'
+                                columns={[
+                                    { id: 'date', displayName: 'Date' },
+                                    { id: 'TimeRange', displayName: 'TimeRange' },
+                                    { id: 'ABM', displayName: 'ABM' },
+                                    { id: 'ACMAN', displayName: 'ACMAN' },
+                                    { id: 'AMPSY', displayName: 'AMPSY' },
+                                    { id: 'BIO', displayName: 'BIO' },
+                                    { id: 'BMCS', displayName: 'BMCS' },
+                                    { id: 'CS', displayName: 'CS' },
+                                    { id: 'CE', displayName: 'CE' },
+                                    { id: 'CS_O', displayName: 'CS_O' },
+                                    { id: 'IE', displayName: 'IE' },
+                                    { id: 'IE_O', displayName: 'IE_O' },
+                                    { id: 'IS', displayName: 'IS' },
+                                    { id: 'IT', displayName: 'AITBM' },
+                                    { id: 'GrandTotal', displayName: 'GrandTotal' },
+                                ]}
+                                datas={filteredData.map(record => ({
+                                    ...record,
+                                    date: new Date(record.date).toLocaleDateString()
+                                }))} 
+                            >
+                                <button className="mt-4 w-full px-6 py-3 bg-yellow-500 text-black font-semibold rounded-b-lg shadow-md hover:bg-yellow-400 transition duration-300">
+                                    Download CSV
+                                </button>
+                            </CsvDownloader>                            
                         </div>
                     )}
                     
