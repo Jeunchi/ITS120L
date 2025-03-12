@@ -10,7 +10,7 @@ function Records() {
 
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:8081/records')
+        fetch('http://localhost:8081/userperhour')
             .then(res => res.json())
             .then(data => {
                 console.log("Fetched Data:", data);
@@ -48,7 +48,7 @@ function Records() {
             <p className="text-yellow-500 ">Per Program</p>
           </Link>
           <Link 
-            to="/perhour" 
+            to="/" 
             className="font-medium hover:underline text-lg text-decoration-none"
           >
             <p className="text-yellow-500 ">Per Hour</p>
@@ -84,28 +84,43 @@ function Records() {
                             <table className="records-table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Course</th>
-                                        <th>Year Level</th> 
-                                        <th>Time In</th>
-                                        <th>Time Out</th>
                                         <th>Date</th>
+                                        <th>Time Range</th>
+                                        <th>ABM</th>
+                                        <th>ACMAN</th>
+                                        <th>ADA</th>
+                                        <th>AMPSY</th>
+                                        <th>BIO</th>
+                                        <th>BMCS</th>
+                                        <th>CS</th>
+                                        <th>CE</th>
+                                        <th>CS_O</th>
+                                        <th>IE</th>
+                                        <th>IE_O</th>
+                                        <th>IS</th> 
+                                        <th>IT</th>
+                                        <th>GrandTotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredData.length > 0 ? (
                                         filteredData.map((d, index) => (
                                             <tr key={index}>
-                                                <td>{d.id}</td>
-                                                <td className="name-cell">{d.name}</td>
-                                                <td>{d.email}</td>
-                                                <td>{d.course}</td>
-                                                <td className="year-cell">{d.year_level}</td> 
-                                                <td>{d.time_in}</td>
-                                                <td>{d.time_out}</td>
-                                                <td>{new Date(d.date).toLocaleDateString()}</td>
+                                                <td>{d.Date}</td>
+                                                <td>{d.TimeRange}</td>
+                                                <td>{d.ABM}</td>
+                                                <td>{d.ACMAN}</td>
+                                                <td>{d.ADA}</td>
+                                                <td>{d.AMPSY}</td>
+                                                <td>{d.BIO}</td>
+                                                <td>{d.BMCS}</td>
+                                                <td>{d.CS}</td>
+                                                <td>{d.CE}</td>
+                                                <td>{d.CS_O}</td>
+                                                <td>{d.IE}</td>
+                                                <td>{d.IE_O}</td>
+                                                <td>{d.IS}</td>
+                                                <td>{d.IT}</td>
                                             </tr>    
                                         ))
                                     ) : (

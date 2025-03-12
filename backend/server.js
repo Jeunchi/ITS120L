@@ -60,6 +60,14 @@ app.get('/records', async (req, res) => {
     });
 });
 
+app.get('/userperhour', async (req, res) => {
+    const sql = "SELECT Date, TimeRange, ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usercountsperhour";
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 
 app.listen(8081, ()=> {
     console.log("listening")

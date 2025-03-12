@@ -10,91 +10,102 @@ function Signup() {
     name: '',
     email: '',
     password: ''
-  })
-  const navigate=useNavigate();
-  const[errors,setErrors] = useState({})
+  });
+  
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   
   const handleInput = (event) => {
-    setValues(prev => ({...prev, [event.target.name]: event.target.value})) // Remove the square brackets
-}
-
-  const handleSubmit =(event) => {
-    event.preventDefault();
-    setErrors(validation(values));
-    
-    if(errors.name === "" && errors.email === ""&& errors.password === "") {
-      axios.post('http://localhost:8081/signup', values)
-      .then(res => {
-        navigate('/');
-      })
-      .catch(err => console.log(err));
-    }
-
-  }
-
-
-      return (
-        <div className="flex flex-col bg-gray-950 place-content-center">
-          <div className="flex flex-col place-items-center text-center relative h-screen">
-            <div className="flex z-10 flex-col gap-8 mt-35">
-              <div className="flex z-10 w-98 h-15 rounded-[0.9vw] bg-red-600 text-white place-content-center py-2 text-4xl">
-                <h2 className="text-white">Sign Up</h2>
-              </div>
-              <div className="flex bg-gray-700 z-10 p-6 rounded-[0.9vw] w-98 place-content-center">
-                <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-                  <div className='mb-3'>
-                  <label className="text-white text-2xl self-start px-2">Name</label>
-                  <input type="text" 
-                    placeholder="Enter name" 
-                    name='name'
-                    onChange={handleInput}
-                    className="form-control bg-gray-300 rounded-full w-80 h-9 px-3"
-                  />
-                  {errors.name && <span className='text-danger'> {errors.name}</span>}
-                  </div>
-
-                  <div className='mb-3'>
-                  <label className="text-white text-2xl self-start px-2">E-mail</label>
-                  <input type="email" 
-                    placeholder="Enter Email" 
-                    name='email'
-                    onChange={handleInput}
-                    className="form-control bg-gray-300 rounded-full w-80 h-9 px-3"
-                  />
-                  {errors.email && <span className='text-danger'> {errors.email}</span>}
-                  </div>
-
-                  <div className="mb-3">
-                  <label htmlFor="password" 
-                    className="text-white">Password</label>
-                  <input type="password" 
-                    placeholder="Enter Password" 
-                    name='password'
-                    className="form-control bg-gray-300 rounded-full w-80 h-9 px-3"
-                    onChange={handleInput}
-                    />
-                  {errors.password && <span className='text-danger'> {errors.password}</span>}
-                </div>
-                  
-                    <button className="btn btn-success w-100 rounded-full">Sign in</button>
-                  
-                  
-                    <Link to="/Login" className="btn btn-success w-100 rounded-full text-decoration-none">
-                      Log in
-                    </Link>
-                  
-                </form>
-              </div>
-            </div>
-            <img src={logo} className="flex h-screen w-screen opacity-25 absolute z-0" />
-          </div>
-        </div>
-      );
-      
-}
-
-
-
+    setValues(prev => ({...prev, [event.target.name]: event.target.value}));
+  };
   
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const validationErrors = validation(values);
+    setErrors(validationErrors);
+    
+    if(errors.name === "" && errors.email === "" && errors.password === "") {
+      axios.post('http://localhost:8081/signup', values)
+        .then(res => {
+          navigate('/');
+        })
+        .catch(err => console.log(err));
+    }
+  };
+  
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <div className="flex flex-col items-center mb-6">
+          <img src={logo} alt="Mapua Logo" className="h-16 mb-2" />
+          <h1 className="text-2xl font-bold text-red-800">Sign Up</h1>
+        </div>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+              Name
+            </label>
+            <input 
+              type="text" 
+              name="name" 
+              id="name"
+              onChange={handleInput}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your name"
+            />
+            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+          </div>
+          
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              E-mail
+            </label>
+            <input 
+              type="email" 
+              name="email" 
+              id="email"
+              onChange={handleInput}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your email"
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+          </div>
+          
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Password
+            </label>
+            <input 
+              type="password" 
+              name="password" 
+              id="password"
+              onChange={handleInput}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your password"
+            />
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+          </div>
+          
+          <button 
+            type="submit" 
+            className="w-full bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 mb-4"
+          >
+            Sign up
+          </button>
+          
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link to="/" className="text-red-800 hover:underline font-medium">
+                Log in
+              </Link>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
 
-  export default Signup
+export default Signup;
