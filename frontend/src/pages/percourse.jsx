@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
 import './Records.css';
 
-function perhour() {
+function percourse() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:8081/userperhour')
+        fetch('http://localhost:8081/userpercourse')
             .then(res => res.json())
             .then(data => {
                 console.log("Frontend received data:", data); // Debugging log
@@ -86,7 +86,6 @@ function perhour() {
                                 <thead>
                                     <tr>
                                         <th>Date</th>
-                                        <th>Time Range</th>
                                         <th>ABM</th>
                                         <th>ACMAN</th>
                                         <th>ADA</th>
@@ -108,7 +107,6 @@ function perhour() {
                                         filteredData.map((d, index) => (
                                             <tr key={index}>
                                                 <td>{new Date(d.date).toLocaleDateString()}</td>
-                                                <td className="year-cell">{d.TimeRange}</td>
                                                 <td className="year-cell">{d.ABM}</td>
                                                 <td className="year-cell">{d.ACMAN}</td>
                                                 <td className="year-cell">{d.ADA}</td>
@@ -156,4 +154,4 @@ function perhour() {
     );
 }
 
-export default perhour;
+export default percourse;

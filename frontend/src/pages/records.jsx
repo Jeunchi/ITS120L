@@ -42,7 +42,7 @@ function Records() {
             <p className="text-yellow-500 ">Home</p>
           </Link>
           <Link 
-            to="/" 
+            to="/percourse" 
             className="font-medium hover:underline text-lg text-decoration-none"
           >
             <p className="text-yellow-500 ">Per Program</p>

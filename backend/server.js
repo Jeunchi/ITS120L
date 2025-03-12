@@ -62,12 +62,32 @@ app.get('/records', async (req, res) => {
 
 app.get('/userperhour', async (req, res) => {
     const sql = "SELECT Date, TimeRange, ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usercountsperhour";
+    
     db.query(sql, (err, data) => {
-        if (err) return res.json(err);
+        if (err) {
+            console.error("Database Query Error:", err);
+            return res.json({ error: err.sqlMessage });
+        }
+        
+        console.log("Fetched Data from Database:", data); // Debugging
         return res.json(data);
     });
 });
 
+
+app.get('/userpercourse', async (req, res) => {
+    const sql = "SELECT Date ABM, ACMAN, ADA, AMPSY, BIO, BMCS, CS, CE, CS_O, IE, IE_O, `IS`, IT, GrandTotal FROM usersperprogram";
+    
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error("Database Query Error:", err);
+            return res.json({ error: err.sqlMessage });
+        }
+        
+        console.log("Fetched Data from Database:", data); // Debugging
+        return res.json(data);
+    });
+});
 
 app.listen(8081, ()=> {
     console.log("listening")
