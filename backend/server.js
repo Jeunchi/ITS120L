@@ -46,10 +46,25 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+    return res.json("From Backend side");
+});
+
+
+// API endpoint to fetch data
+app.get('/records', async (req, res) => {
+    const sql = "SELECT id, name, email, course, year_level, time_in, time_out, date FROM student_info";
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 
 app.listen(8081, ()=> {
     console.log("listening")
 })
+
 
 db.connect((err) => {
     if (err) {

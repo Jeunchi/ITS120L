@@ -1,0 +1,233 @@
+/* Records.css */
+
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Page Layout */
+.records-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1a2633; /* Dark navy background matching homepage */
+    color: white;
+}
+
+/* Navigation Bar */
+.nav-header {
+    background-color: #aa0000; /* Red header */
+    padding: 15px 20px;
+    color: white;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-title {
+    color: #ffc107; /* Gold */
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #ffc107; /* Gold on hover */
+}
+
+.nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Main Content Area */
+.records-content {
+    flex: 1;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.records-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #111927; /* Darker navy for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.records-title {
+    color: #ffc107; /* Gold color similar to MAPUA text */
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.search-bar {
+    margin-bottom: 25px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #1f2937; /* Darker input matching the theme */
+    border: 1px solid #374151;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+
+.search-bar input::placeholder {
+    color: #9ca3af;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #c9151e; /* Red accent color */
+    box-shadow: 0 0 0 3px rgba(201, 21, 30, 0.2);
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid #2d3748;
+    margin-bottom: 20px;
+}
+
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.records-table th {
+    background-color: #aa0000; /* Red header matching the site header */
+    color: white;
+    text-align: left;
+    padding: 14px 16px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.records-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2d3748;
+    color: #e2e8f0;
+}
+
+.name-cell {
+    font-weight: 500;
+    color: #ffc107; /* Gold color for names */
+}
+
+.year-cell {
+    text-align: center;
+    font-weight: 500;
+}
+
+.records-table tr {
+    background-color: #1a2633; /* Match main background */
+    transition: background-color 0.2s;
+}
+
+.records-table tr:nth-child(even) {
+    background-color: #1f2937; /* Slightly lighter for alternating rows */
+}
+
+.records-table tr:hover {
+    background-color: #2d3748; /* Darker highlight on hover */
+}
+
+.no-records {
+    text-align: center;
+    padding: 30px;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.records-footer-stats {
+    color: #9ca3af;
+    font-size: 14px;
+    text-align: right;
+    padding-top: 15px;
+    border-top: 1px solid #2d3748;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #aa0000; /* Red footer matching header */
+    padding: 15px 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: #ffc107; /* Gold on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-title {
+        font-size: 22px;
+    }
+    
+    .records-container {
+        padding: 20px 15px;
+    }
+    
+    .records-table th, 
+    .records-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}

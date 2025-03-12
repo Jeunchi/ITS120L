@@ -12,7 +12,7 @@ function Home() {
         <h1 className="font-serif font-bold text-3xl md:text-4xl">MAPUA MAKATI LIBRARY</h1>
         <nav className="flex gap-6">
           <Link 
-            to="/Records" 
+            to="/records" 
             className="font-medium hover:underline text-lg text-decoration-none"
           >
             <p className="text-yellow-500 ">Records</p>
@@ -75,7 +75,7 @@ function Home() {
 
       {/* Footer */}
       <footer className="bg-red-800 text-yellow-500 py-4 px-6 flex justify-between">
-        <Link to="/About" className="font-medium hover:underline text-decoration-none"><p className="text-yellow-500 ">About</p></Link>
+        <Link to="https://library.mapua.edu.ph/About/Default.aspx" className="font-medium hover:underline text-decoration-none"><p className="text-yellow-500 ">About</p></Link>
         <button 
           onClick={() => navigate('/')} 
           className="font-medium hover:underline"
