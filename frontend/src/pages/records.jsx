@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
 import './Records.css';
+import CsvDownloader from 'react-csv-downloader';
 
 function Records() {
     const [data, setData] = useState([]);
@@ -115,6 +116,34 @@ function Records() {
                                     )}
                                 </tbody>
                             </table>
+                            <CsvDownloader 
+                                filename="student_records.csv"
+                                extension=".csv"
+                                separator=","
+                                wrapColumnChar='"'
+                                columns={[
+                                    { id: 'id', displayName: 'ID' },
+                                    { id: 'name', displayName: 'Name' },
+                                    { id: 'email', displayName: 'Email' },
+                                    { id: 'course', displayName: 'Course' },
+                                    { id: 'year_level', displayName: 'Year Level' },
+                                    { id: 'time_in', displayName: 'Time In' },
+                                    { id: 'time_out', displayName: 'Time Out' },
+                                    { id: 'date', displayName: 'Date' }
+                                ]}
+                                datas={filteredData.map(record => ({
+                                    ...record,
+                                    date: new Date(record.date).toLocaleDateString()
+                                }))} 
+                            >
+                                <button className="mt-4 w-full px-6 py-3 bg-yellow-500 text-black font-semibold rounded-b-lg shadow-md hover:bg-yellow-400 transition duration-300">
+                                    Download CSV
+                                </button>
+                            </CsvDownloader>
+
+
+
+
                         </div>
                     )}
                     
