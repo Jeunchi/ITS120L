@@ -1,13 +1,9 @@
-function RecordsValidation(values) {
+function Validation(values) {
 
     let error = {}
 
 
-    if(values.ID === "") {
-        error.ID = "ID should not be empty"
-    }else {
-        error.ID = ""
-    }
+
 
     if(values.name === "") {
         error.name = "Name should not be empty"
@@ -30,8 +26,23 @@ function RecordsValidation(values) {
     } else {
         error.yearlevel = ""
     }
+    if(values.timein === "") {
+        error.timein = "Time in should not be empty"
+    } else {
+        error.timein = ""
+    }
+    if(values.timeout === "") {
+        error.timeout = "Time out should not be empty"
+    } else {
+        error.timeout = ""
+    }
+    if(values.date === "") {
+        error.date = "Date should not be empty"
+    } else {
+        error.date = ""
+    }
 
     return error;
 }
 
-export default RecordsValidation;
+export default Validation;

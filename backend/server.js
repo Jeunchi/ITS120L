@@ -55,26 +55,30 @@ app.get('/', (req, res) => {
 });
 
 app.post('/studentrecords', (req, res) => {
-    const sql = "INSERT INTO login (`ID`, `name`, `email`, `course`, `year_level`, `time_in`, `time_out` , `date`) VALUES (?)";
+    // Log the incoming request body to debug
+    console.log("Received request body:", req.body);
+    
+    // Use the proper table (student_info instead of login)
+    const sql = "INSERT INTO student_info (`name`, `email`, `course`, `year_level`, `time_in`, `time_out`, `date`) VALUES (?)";
     const values = [
-        req.body.ID,
-        req.body.name,
-        req.body.email,
-        req.body.course,
-        req.body.year_level,
-        req.body.time_in,
-        req.body.time_out,
-        req.body.date
+      req.body.name,
+      req.body.email,
+      req.body.course,
+      req.body.year_level,
+      req.body.time_in,
+      req.body.time_out,
+      req.body.date
     ];
+    
     db.query(sql, [values], (err, data) => {
-        if (err) {
-            console.error("Query Error: ", err);
-            return res.status(500).json({ message: "Database query failed", error: err });
-        }
-        console.log("Data Inserted: ", data);
-        return res.json(data);
+      if (err) {
+        console.error("Query Error: ", err);
+        return res.status(500).json({ message: "Database query failed", error: err });
+      }
+      console.log("Data Inserted: ", data);
+      return res.json(data);
     });
-});
+  });
 
 // API endpoint to fetch data
 app.get('/records', async (req, res) => {
