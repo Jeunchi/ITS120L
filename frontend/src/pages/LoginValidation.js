@@ -1,25 +1,24 @@
-function validation(values) {
-    let error = {}
-    const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/  // Fixed typo in regex pattern
-    const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/
-    
-    if(values.email === "") {
-      error.email = "Email should not be empty"
-    } else if(!email_pattern.test(values.email)) {
-      error.email = "Email format is invalid"
-    } else {
-      error.email = ""
-    }
-    
-    if(values.password === "") {
-      error.password = "Password should not be empty"
-    } else if(!password_pattern.test(values.password)) {
-      error.password = "Password must contain at least 8 characters, including uppercase, lowercase, and numbers"
-    } else {
-      error.password = ""
-    }
-    
-    return error;
+// LoginValidation.js
+const validation = (values) => {
+  let errors = {};
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+  
+  // Email validation
+  if (!values.email) {
+    errors.email = "Email is required";
+  } else if (!emailPattern.test(values.email)) {
+    errors.email = "Email format is invalid";
   }
   
-  export default validation;
+  // Password validation
+  if (!values.password) {
+    errors.password = "Password is required";
+  } else if (!passwordPattern.test(values.password)) {
+    errors.password = "Password must be at least 8 characters with uppercase, lowercase, number and special character";
+  }
+  
+  return errors;
+};
+
+export default validation;

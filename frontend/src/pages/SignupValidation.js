@@ -1,34 +1,36 @@
 function validation(values) {
-
-    let error = {}
-    const email_pattern = /^[^\s@]+@[^\s@]+\.[^s@]+$/
-    const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/
-
-
-    if(values.name === "") {
-        error.name = "Name should not be empty"
-    }else {
-        error.name = ""
+    let errors = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    
+    // Name validation
+    if (values.name !== undefined) {
+      if (!values.name) {
+        errors.name = "Name is required";
+      } else if (values.name.length < 2) {
+        errors.name = "Name must be at least 2 characters";
+      } else if (values.name.length > 50) {
+        errors.name = "Name cannot exceed 50 characters";
+      } else if (!/^[a-zA-Z\s]+$/.test(values.name)) {
+        errors.name = "Name can only contain letters and spaces";
+      }
     }
-
-    if(values.email === "") {
-        error.email = "Email should not be empty"
+    
+    // Email validation
+    if (!values.email) {
+      errors.email = "Email is required";
+    } else if (!emailPattern.test(values.email)) {
+      errors.email = "Email format is invalid";
     }
-    else if(!email_pattern.test(values.email)) {
-        error.email = "Email Didn't match"
-    } else {
-        error.email = ""
+    
+    // Password validation
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (!passwordPattern.test(values.password)) {
+      errors.password = "Password must be at least 8 characters with uppercase, lowercase, number and special character";
     }
-
-    if(values.password === "") {
-        error.password = "Password should not be empty"
-    }
-    else if(!password_pattern.test(values.password)) {
-        error.password = "Password didn't match"
-    } else {
-        error.password = ""
-    }
-    return error;
+    
+    return errors;
 }
 
 export default validation;

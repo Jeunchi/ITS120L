@@ -70,6 +70,7 @@ const handleSubmit = (event) => {
       
     
       return (
+        
         <motion.div 
           className="flex items-center justify-center min-h-screen bg-gray-900"
           initial={{ opacity: 0 }} 
@@ -83,6 +84,13 @@ const handleSubmit = (event) => {
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ duration: 0.5 }}
           >
+            <Link 
+                to="/login" 
+                className="flex-1 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 text-center"
+            >
+                ADMIN
+            </Link>
+            
             <div className="flex flex-col items-center mb-6">
               <img src={logo} alt="Mapua Logo" className="h-16 mb-2" />
               <h1 className="text-white text-2xl font-bold ">MAPUA LIBRARY</h1>
@@ -204,8 +212,12 @@ const handleSubmit = (event) => {
                 >
                 Submit
                 </button>
+
+                            
               </div>
             </form>
+
+
           </motion.div>
         </motion.div>
       );
