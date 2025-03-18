@@ -1,8 +1,9 @@
-// LoginValidation.js
-const validation = (values) => {
+function validation(values) {
   let errors = {};
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+  const passwordPattern = /^[a-zA-Z0-9]{6,}$/; // At least 6 characters, letters and numbers only
+  
+
   
   // Email validation
   if (!values.email) {
@@ -15,10 +16,10 @@ const validation = (values) => {
   if (!values.password) {
     errors.password = "Password is required";
   } else if (!passwordPattern.test(values.password)) {
-    errors.password = "Password must be at least 8 characters with uppercase, lowercase, number and special character";
+    errors.password = "Password must be at least 6 characters with letters and numbers only";
   }
   
   return errors;
-};
+}
 
 export default validation;
