@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
 import './Records.css';
 import CsvDownloader from 'react-csv-downloader';
+=======
+import logo from '../assets/mapua_logo.svg'
+import { useNavigate } from 'react-router-dom';
+
+>>>>>>> dfb9ee408da0ff23c3ca1ed71fc167337d298acb
 
 function Records() {
     const [data, setData] = useState([]);
@@ -35,6 +41,7 @@ function Records() {
     );
 
     return (
+<<<<<<< HEAD
         <div className={`records-page ${fadeIn ? 'fade-in' : ''}`}>
       {/* Navigation Bar */}
       <header className="bg-red-800 text-yellow-500 py-4 px-6 flex justify-between items-center fade-in-element">
@@ -151,6 +158,10 @@ function Records() {
                     </div>
                 </div>
             </div>
+=======
+        <div className="flex flex-col bg-gray-950 place-content-center h-screen"> 
+            <img src={logo} className="flex h-screen w-screen opacity-25 absolute z-0" />
+>>>>>>> dfb9ee408da0ff23c3ca1ed71fc167337d298acb
 
             {/* Footer */}
             <footer className="site-footer fade-in-element">
