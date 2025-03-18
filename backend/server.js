@@ -5,6 +5,7 @@ const cors = require('cors');
 
 
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -15,6 +16,7 @@ const db = mysql.createConnection({
     password: "",
     database: "signup"
 })
+
 
 
 
@@ -162,3 +164,4 @@ db.connect((err) => {
         console.log("Connected to the database");
     }
 });
+
