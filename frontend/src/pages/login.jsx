@@ -37,6 +37,29 @@ function Login() {
     setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
+  const handleLogin = async () => {
+    try {
+      // Use Appwrite to create a session
+      await account.createEmailPasswordSession(values.email, values.password);
+      const user = await account.get();
+      setLoggedInUser(user);
+      navigate("/home");
+    } catch (error) {
+      alert("Login failed: " + error.message);
+      console.error("Login error:", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession('current');
+      setLoggedInUser(null);
+    } catch (error) {
+      alert("Logout failed: " + error.message);
+      console.error("Logout error:", error);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validation(values);
@@ -46,16 +69,7 @@ function Login() {
       Object.keys(validationErrors).length === 0 ||
       (validationErrors.email === "" && validationErrors.password === "")
     ) {
-      try {
-        // Use Appwrite to create a session
-        await account.createEmailPasswordSession(values.email, values.password);
-        const user = await account.get();
-        setLoggedInUser(user);
-        navigate("/home");
-      } catch (error) {
-        alert("Login failed: " + error.message);
-        console.error("Login error:", error);
-      }
+      handleLogin();
     }
   };
 
@@ -101,7 +115,7 @@ function Login() {
               className="block text-gray-300 text-sm font-bold mb-2"
               htmlFor="email"
             >
-              Username
+              Email
             </label>
             <input
               type="email"
@@ -109,7 +123,7 @@ function Login() {
               id="email"
               onChange={handleInput}
               className="w-full px-3 py-2 border border-gray-600 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
             />
             {errors.email && (
               <p className="text-red-500 text-xs mt-1">{errors.email}</p>
@@ -160,6 +174,26 @@ function Login() {
               Login
             </button>
           </motion.div>
+          
+          {loggedInUser && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="mt-4"
+            >
+              <p className="text-green-400 text-sm mb-2">
+                Logged in as {loggedInUser.name}
+              </p>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-300"
+              >
+                Logout
+              </button>
+            </motion.div>
+          )}
         </form>
       </motion.div>
     </motion.div>

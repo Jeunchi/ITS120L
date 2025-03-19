@@ -2,9 +2,30 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "../assets/mapua_logo.svg";
+import { account } from "../lib/appwrite"; // Import the Appwrite account
 
 function Home() {
   const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      // Check if user is logged in first
+      const currentUser = await account.get();
+      console.log("Current user before logout:", currentUser);
+      
+      // Then attempt to delete session
+      await account.deleteSession('current');
+      navigate('/');
+    } catch (error) {
+      console.error("Sign out error:", error);
+      // If failed due to not being logged in, just redirect to login
+      if (error.message.includes("missing scope") || error.code === 401) {
+        navigate('/');
+      } else {
+        alert("Failed to sign out: " + error.message);
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -113,7 +134,10 @@ function Home() {
         >
           <p className="text-yellow-500">About</p>
         </Link>
-        <button onClick={() => navigate("/")} className="font-medium hover:underline">
+        <button 
+          onClick={handleSignOut} 
+          className="font-medium hover:underline text-yellow-500"
+        >
           Sign Out
         </button>
       </motion.footer>
@@ -122,3 +146,4 @@ function Home() {
 }
 
 export default Home;
+

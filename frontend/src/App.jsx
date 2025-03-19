@@ -20,7 +20,7 @@ function App() {
             <Route path="/Home" element={<Home />} />
             <Route path="/Records" element={<Records />} />
             <Route path="/Validator" element={<Validator />} />
-            <Route path="/" element={<Navigate to="/Validator" replace />} /> 
+            <Route path="/" element={<Navigate to="/Login" replace />} /> 
         </Routes>
       </div>
     </Router>
