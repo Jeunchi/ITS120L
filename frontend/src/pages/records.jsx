@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
 import './Records.css';
 import CsvDownloader from 'react-csv-downloader';
+import { databases, Query } from '../lib/appwrite'; // Import from your appwrite config file
 
 function Records() {
     const [data, setData] = useState([]);
@@ -14,18 +15,35 @@ function Records() {
         // Start fade in animation after component mounts
         setFadeIn(true);
         
-        setLoading(true);
-        fetch('http://localhost:8081/records')
-            .then(res => res.json())
-            .then(data => {
-                console.log("Fetched Data:", data);
-                setData(data);
+        // Fetch data from Appwrite
+        const fetchRecords = async () => {
+            try {
+                setLoading(true);
+                
+                // Replace these with your actual Appwrite database and collection IDs
+                const databaseId = '67da128c00360aebffad';
+                const collectionId = '67da12c50024066b85ca'; // Your collection ID
+                
+                const response = await databases.listDocuments(
+                    databaseId,
+                    collectionId,
+                    [
+                        // Optional: Add queries if needed
+                        // Query.orderDesc('date'),
+                        // Query.limit(100)
+                    ]
+                );
+                
+                console.log("Fetched Data:", response.documents);
+                setData(response.documents);
                 setLoading(false);
-            })
-            .catch(err => {
-                console.log("Fetch error:", err);
+            } catch (error) {
+                console.error("Error fetching records:", error);
                 setLoading(false);
-            });
+            }
+        };
+        
+        fetchRecords();
     }, []);
     
     const filteredData = data.filter(record => 
@@ -47,7 +65,7 @@ function Records() {
             <p className="text-yellow-500 ">Home</p>
           </Link>
           <Link 
-            to="/percourse" 
+            to="/Percourse" 
             className="font-medium hover:underline text-lg text-decoration-none"
           >
             <p className="text-yellow-500 ">Per Program</p>
@@ -88,7 +106,7 @@ function Records() {
                             <table className="records-table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Course</th>
@@ -101,8 +119,8 @@ function Records() {
                                 <tbody>
                                     {filteredData.length > 0 ? (
                                         filteredData.map((d, index) => (
-                                            <tr key={index} className="table-row-fade">
-                                                <td>{d.id}</td>
+                                            <tr key={d.$id || index} className="table-row-fade">
+
                                                 <td className="name-cell">{d.name}</td>
                                                 <td>{d.email}</td>
                                                 <td>{d.course}</td>
@@ -125,7 +143,7 @@ function Records() {
                                 separator=","
                                 wrapColumnChar='"'
                                 columns={[
-                                    { id: 'id', displayName: 'ID' },
+
                                     { id: 'name', displayName: 'Name' },
                                     { id: 'email', displayName: 'Email' },
                                     { id: 'course', displayName: 'Course' },

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/mapua_logo.svg';
-import './Records.css';
+import './records.css';
 import CsvDownloader from 'react-csv-downloader';
 
 
