@@ -2,9 +2,8 @@
 const express = require("express");
 const mysql = require('mysql');
 const cors = require('cors');
-
-
-
+const { NlpManager } = require('node-nlp');
+const manager = require('./nlp/nlp.config');
 
 const app = express();
 app.use(cors());
@@ -16,9 +15,6 @@ const db = mysql.createConnection({
     password: "",
     database: "signup"
 })
-
-
-
 
 app.post('/signup', (req, res) => {
     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
@@ -120,6 +116,8 @@ app.get('/userperhour', async (req, res) => {
     });
 });
 
+
+
 app.get('/usersperprogram', async (req, res) => {
     // Use explicit casting if needed
     const sql = `
@@ -152,6 +150,83 @@ app.get('/usersperprogram', async (req, res) => {
         return res.json(data);
     });
 });
+
+//For AI assitant
+
+(async () => {
+    await manager.train();
+    manager.save();
+})();
+
+app.post('/chat', async (req, res) => {
+    const message = req.body.message;
+    const response = await manager.process('en', message);
+    const answer = response.answer || "Sorry, I don't understand.";
+
+    res.json({ answer: answer });
+});
+
+function Time_out () {
+    const sql = `
+        SELECT 
+            Date, 
+            CAST(ABM AS SIGNED) as ABM, 
+            CAST(ACMAN AS SIGNED) as ACMAN,
+            CAST(ADA AS SIGNED) as ADA,
+            CAST(AMPSY AS SIGNED) as AMPSY,
+            CAST(BIO AS SIGNED) as BIO,
+            CAST(BMCS AS SIGNED) as BMCS,
+            CAST(CS AS SIGNED) as CS,
+            CAST(CE AS SIGNED) as CE,
+            CAST(CS_O AS SIGNED) as CS_O,
+            CAST(IE AS SIGNED) as IE,
+            CAST(IE_O AS SIGNED) as IE_O,
+            CAST(\`IS\` AS SIGNED) as \`IS\`,
+            CAST(IT AS SIGNED) as IT,
+            CAST(GrandTotal AS SIGNED) as GrandTotal
+        FROM usersperprogram
+    `;
+    
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error("Database Query Error:", err);
+            return res.status(500).json({ error: err.message });
+        }
+        const result = data.map (row => {
+            const programCounts = {
+                ABM: row.ABM,
+                ACMAN: row.ACMAN,
+                ADA: row.ADA,
+                AMPSY: row.AMPSY,
+                BIO: row.BIO,
+                BMCS: row.BMCS,
+                CS: row.CS,
+                CE: row.CE,
+                CS_O: row.CS_O,
+                IE: row.IE,
+                IE_O: row.IE_O,
+                IS: row.IS,
+                IT: row.IT
+            }
+
+            let maxProgram = null
+            let maxCount = -1
+
+            for (const program in programCounts) {
+               if (programCounts[program] > maxCount) {
+                    maxCount = programCounts[program];
+                    maxProgram = program;
+                }
+            }
+            return {
+                    Date: row.Date,
+                    maxProgram: maxProgram,
+                    maxCount: maxCount,
+                };
+        })
+    });  
+}
+
 app.listen(8081, ()=> {
     console.log("listening")
 })

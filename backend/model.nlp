@@ -1,0 +1,695 @@
+{
+  "settings": {
+    "languages": [
+      "en"
+    ]
+  },
+  "nluManager": {
+    "settings": {},
+    "languages": [
+      "en"
+    ],
+    "intentDomains": {},
+    "domainManagers": {
+      "en": {
+        "settings": {
+          "language": "en",
+          "useNoneFeature": true,
+          "config": {
+            "activation": "leaky-relu",
+            "hiddenLayers": [],
+            "iterations": 20000,
+            "learningRate": 0.7,
+            "errorThresh": 0.00005,
+            "momentum": 0.5,
+            "deltaErrorThresh": 0.000001,
+            "maxDecimals": 9,
+            "leakyReluAlpha": 0.08,
+            "timeout": 120000
+          }
+        },
+        "language": "en",
+        "nluClassName": "BrainNLU",
+        "useMasterDomain": true,
+        "trainByDomain": false,
+        "keepStopwords": true,
+        "stemDict": {
+          "hello": {
+            "domain": "default",
+            "intent": "greeting"
+          },
+          "hi": {
+            "domain": "default",
+            "intent": "greeting"
+          },
+          "hey,there": {
+            "domain": "default",
+            "intent": "greeting"
+          },
+          "good,morn": {
+            "domain": "default",
+            "intent": "greeting"
+          },
+          "afternoon,good": {
+            "domain": "default",
+            "intent": "greeting"
+          },
+          "greet": {
+            "domain": "default",
+            "intent": "greeting"
+          },
+          "about,me,our,record,tell": {
+            "domain": "default",
+            "intent": "records"
+          },
+          "can,export,how,record,the": {
+            "domain": "default",
+            "intent": "records"
+          },
+          "exit,is,me,show,status,today": {
+            "domain": "default",
+            "intent": "exit status"
+          },
+          "busiest,hour,me,show,the": {
+            "domain": "default",
+            "intent": "busiest hour"
+          },
+          "hour,idl,me,most,show,the": {
+            "domain": "default",
+            "intent": "idle hour"
+          },
+          "cours,have,me,most,show,student,that,the,the,today": {
+            "domain": "default",
+            "intent": "highest students in course"
+          }
+        },
+        "intentDict": {
+          "greeting": "default",
+          "records": "default",
+          "exit status": "default",
+          "busiest hour": "default",
+          "idle hour": "default",
+          "highest students in course": "default"
+        },
+        "useStemDict": true,
+        "domains": {
+          "master_domain": {
+            "settings": {
+              "language": "en",
+              "useNoneFeature": true,
+              "config": {
+                "activation": "leaky-relu",
+                "hiddenLayers": [],
+                "iterations": 20000,
+                "learningRate": 0.7,
+                "errorThresh": 0.00005,
+                "momentum": 0.5,
+                "deltaErrorThresh": 0.000001,
+                "maxDecimals": 9,
+                "leakyReluAlpha": 0.08,
+                "timeout": 120000
+              }
+            },
+            "language": "en",
+            "keepStopwords": true,
+            "docs": [
+              {
+                "intent": "greeting",
+                "tokens": [
+                  "hello"
+                ]
+              },
+              {
+                "intent": "greeting",
+                "tokens": [
+                  "hi"
+                ]
+              },
+              {
+                "intent": "greeting",
+                "tokens": [
+                  "hey",
+                  "there"
+                ]
+              },
+              {
+                "intent": "greeting",
+                "tokens": [
+                  "good",
+                  "morn"
+                ]
+              },
+              {
+                "intent": "greeting",
+                "tokens": [
+                  "good",
+                  "afternoon"
+                ]
+              },
+              {
+                "intent": "greeting",
+                "tokens": [
+                  "greet"
+                ]
+              },
+              {
+                "intent": "records",
+                "tokens": [
+                  "tell",
+                  "me",
+                  "about",
+                  "our",
+                  "record"
+                ]
+              },
+              {
+                "intent": "records",
+                "tokens": [
+                  "how",
+                  "can",
+                  "export",
+                  "the",
+                  "record"
+                ]
+              },
+              {
+                "intent": "exit status",
+                "tokens": [
+                  "show",
+                  "me",
+                  "today",
+                  "is",
+                  "exit",
+                  "status"
+                ]
+              },
+              {
+                "intent": "busiest hour",
+                "tokens": [
+                  "show",
+                  "me",
+                  "the",
+                  "busiest",
+                  "hour"
+                ]
+              },
+              {
+                "intent": "idle hour",
+                "tokens": [
+                  "show",
+                  "me",
+                  "the",
+                  "most",
+                  "idl",
+                  "hour"
+                ]
+              },
+              {
+                "intent": "highest students in course",
+                "tokens": [
+                  "show",
+                  "me",
+                  "the",
+                  "cours",
+                  "that",
+                  "have",
+                  "the",
+                  "most",
+                  "student",
+                  "today"
+                ]
+              }
+            ],
+            "features": {
+              "hello": 1,
+              "hi": 1,
+              "hey": 1,
+              "there": 1,
+              "good": 2,
+              "morn": 1,
+              "afternoon": 1,
+              "greet": 1,
+              "tell": 1,
+              "me": 5,
+              "about": 1,
+              "our": 1,
+              "record": 2,
+              "how": 1,
+              "can": 1,
+              "export": 1,
+              "the": 5,
+              "show": 4,
+              "today": 2,
+              "is": 1,
+              "exit": 1,
+              "status": 1,
+              "busiest": 1,
+              "hour": 2,
+              "most": 2,
+              "idl": 1,
+              "cours": 1,
+              "that": 1,
+              "have": 1,
+              "student": 1
+            },
+            "isEditing": false,
+            "className": "BrainNLU",
+            "classifier": {
+              "className": "BrainClassifier",
+              "settings": {
+                "language": "en",
+                "useNoneFeature": true,
+                "config": {
+                  "activation": "leaky-relu",
+                  "hiddenLayers": [],
+                  "iterations": 20000,
+                  "learningRate": 0.7,
+                  "errorThresh": 0.00005,
+                  "momentum": 0.5,
+                  "deltaErrorThresh": 0.000001,
+                  "maxDecimals": 9,
+                  "leakyReluAlpha": 0.08,
+                  "timeout": 120000
+                }
+              },
+              "labels": [],
+              "network": {
+                "sizes": [
+                  31,
+                  7
+                ],
+                "layers": [
+                  {
+                    "hello": {},
+                    "hi": {},
+                    "hey": {},
+                    "there": {},
+                    "good": {},
+                    "morn": {},
+                    "afternoon": {},
+                    "greet": {},
+                    "tell": {},
+                    "me": {},
+                    "about": {},
+                    "our": {},
+                    "record": {},
+                    "how": {},
+                    "can": {},
+                    "export": {},
+                    "the": {},
+                    "show": {},
+                    "today": {},
+                    "is": {},
+                    "exit": {},
+                    "status": {},
+                    "busiest": {},
+                    "hour": {},
+                    "most": {},
+                    "idl": {},
+                    "cours": {},
+                    "that": {},
+                    "have": {},
+                    "student": {},
+                    "nonefeature": {}
+                  },
+                  {
+                    "greeting": {
+                      "bias": 6.780032962,
+                      "weights": {
+                        "hello": 5.559483528,
+                        "hi": 5.586810589,
+                        "hey": 2.855802774,
+                        "there": 2.855802774,
+                        "good": 3.80581975,
+                        "morn": 1.90702343,
+                        "afternoon": 1.898795128,
+                        "greet": 5.527884007,
+                        "tell": -0.85653615,
+                        "me": -2.34292984,
+                        "about": -0.85653615,
+                        "our": -0.85653615,
+                        "record": -1.895937085,
+                        "how": -1.039401054,
+                        "can": -1.039401054,
+                        "export": -1.039401054,
+                        "the": -1.793802261,
+                        "show": -1.486393571,
+                        "today": -0.782834589,
+                        "is": -0.731992722,
+                        "exit": -0.731992722,
+                        "status": -0.731992722,
+                        "busiest": -0.481317967,
+                        "hour": -0.703559339,
+                        "most": -0.27308315,
+                        "idl": -0.222241387,
+                        "cours": -0.050841786,
+                        "that": -0.050841786,
+                        "have": -0.050841786,
+                        "student": -0.050841786,
+                        "nonefeature": -6.37393713
+                      }
+                    },
+                    "records": {
+                      "bias": 0.425545774,
+                      "weights": {
+                        "hello": -0.42938605,
+                        "hi": -0.425847262,
+                        "hey": -0.254593641,
+                        "there": -0.254593641,
+                        "good": -0.374486208,
+                        "morn": -0.194771588,
+                        "afternoon": -0.179714635,
+                        "greet": -0.420914769,
+                        "tell": 2.220698357,
+                        "me": 1.011118412,
+                        "about": 2.220698357,
+                        "our": 2.220698357,
+                        "record": 4.401129723,
+                        "how": 2.180429935,
+                        "can": 2.180429935,
+                        "export": 2.180429935,
+                        "the": 1.131823421,
+                        "show": -1.209580064,
+                        "today": -0.350483537,
+                        "is": -0.160972714,
+                        "exit": -0.160972714,
+                        "status": -0.160972714,
+                        "busiest": -0.550585628,
+                        "hour": -0.859096646,
+                        "most": -0.498021871,
+                        "idl": -0.308511078,
+                        "cours": -0.189510837,
+                        "that": -0.189510837,
+                        "have": -0.189510837,
+                        "student": -0.189510837,
+                        "nonefeature": -0.435208917
+                      }
+                    },
+                    "exit status": {
+                      "bias": 0.136697784,
+                      "weights": {
+                        "hello": -0.138332143,
+                        "hi": -0.136989087,
+                        "hey": -0.084186986,
+                        "there": -0.084186986,
+                        "good": -0.12598829,
+                        "morn": -0.065810338,
+                        "afternoon": -0.060177967,
+                        "greet": -0.13529934,
+                        "tell": -0.294157803,
+                        "me": 1.034649968,
+                        "about": -0.294157803,
+                        "our": -0.294157803,
+                        "record": -0.294157803,
+                        "the": -1.319578528,
+                        "show": 1.328807592,
+                        "today": 2.054635048,
+                        "is": 2.64838624,
+                        "exit": 2.64838624,
+                        "status": 2.64838624,
+                        "busiest": -0.456865519,
+                        "hour": -0.725826979,
+                        "most": -0.86271292,
+                        "idl": -0.268961519,
+                        "cours": -0.593751431,
+                        "that": -0.593751431,
+                        "have": -0.593751431,
+                        "student": -0.593751431,
+                        "nonefeature": -0.1404365
+                      }
+                    },
+                    "busiest hour": {
+                      "bias": 0.111481452,
+                      "weights": {
+                        "hello": -0.111041494,
+                        "hi": -0.110400386,
+                        "hey": -0.0629384,
+                        "there": -0.0629384,
+                        "good": -0.096681818,
+                        "morn": -0.050697636,
+                        "afternoon": -0.045984175,
+                        "greet": -0.10906934,
+                        "tell": -0.233826667,
+                        "me": 1.205221415,
+                        "about": -0.233826667,
+                        "our": -0.233826667,
+                        "record": -0.613826275,
+                        "how": -0.379999727,
+                        "can": -0.379999727,
+                        "export": -0.379999727,
+                        "the": 1.646078825,
+                        "show": 1.439048171,
+                        "today": -0.988219678,
+                        "is": -0.587031424,
+                        "exit": -0.587031424,
+                        "status": -0.587031424,
+                        "busiest": 5.626782417,
+                        "hour": 2.427267313,
+                        "most": -3.600702286,
+                        "idl": -3.199514627,
+                        "cours": -0.401188135,
+                        "that": -0.401188135,
+                        "have": -0.401188135,
+                        "student": -0.401188135,
+                        "nonefeature": -0.111655384
+                      }
+                    },
+                    "idle hour": {
+                      "bias": -0.102102758,
+                      "weights": {
+                        "hello": -0.067333728,
+                        "hi": -0.064294197,
+                        "hey": -0.052255087,
+                        "there": -0.052255087,
+                        "good": -0.086052574,
+                        "morn": -0.045255072,
+                        "afternoon": -0.040797506,
+                        "greet": -0.055309732,
+                        "tell": -0.169417351,
+                        "me": 0.390828341,
+                        "about": -0.169417351,
+                        "our": -0.169417351,
+                        "record": -0.368825257,
+                        "how": -0.199407861,
+                        "can": -0.199407861,
+                        "export": -0.199407861,
+                        "the": 0.600764334,
+                        "show": 0.560245931,
+                        "today": -1.292273402,
+                        "is": -0.239926219,
+                        "exit": -0.239926219,
+                        "status": -0.239926219,
+                        "busiest": -3.257689714,
+                        "hour": 1.852519035,
+                        "most": 4.057860851,
+                        "idl": 5.110208035,
+                        "cours": -1.052346945,
+                        "that": -1.052346945,
+                        "have": -1.052346945,
+                        "student": -1.052346945,
+                        "nonefeature": -0.0705695
+                      }
+                    },
+                    "highest students in course": {
+                      "bias": -0.262706868,
+                      "weights": {
+                        "hello": -0.071689419,
+                        "hi": -0.067723326,
+                        "hey": -0.06338913,
+                        "there": -0.06338913,
+                        "good": -0.112271346,
+                        "morn": -0.059422716,
+                        "afternoon": -0.052848633,
+                        "greet": -0.054259624,
+                        "tell": -0.200970739,
+                        "me": 0.103839464,
+                        "about": -0.200970739,
+                        "our": -0.200970739,
+                        "record": -0.384924531,
+                        "how": -0.183953762,
+                        "can": -0.183953762,
+                        "export": -0.183953762,
+                        "the": 0.709598422,
+                        "show": 0.304810226,
+                        "today": 1.595882893,
+                        "is": -0.588742077,
+                        "exit": -0.588742077,
+                        "status": -0.588742077,
+                        "busiest": -0.416526586,
+                        "hour": -1.291072488,
+                        "most": 1.310078621,
+                        "idl": -0.874545991,
+                        "cours": 2.184623957,
+                        "that": 2.184623957,
+                        "have": 2.184623957,
+                        "student": 2.184623957,
+                        "nonefeature": -0.075966731
+                      }
+                    },
+                    "None": {
+                      "bias": 1.638694023,
+                      "weights": {
+                        "hello": -1.508511424,
+                        "hi": -1.489741564,
+                        "hey": -0.801395416,
+                        "there": -0.801395416,
+                        "good": -1.075824261,
+                        "morn": -0.541986167,
+                        "afternoon": -0.533838153,
+                        "greet": -1.45475328,
+                        "tell": -0.202605411,
+                        "me": -0.553357363,
+                        "about": -0.202605411,
+                        "our": -0.202605411,
+                        "record": -0.448266864,
+                        "how": -0.245661497,
+                        "can": -0.245661497,
+                        "export": -0.245661497,
+                        "the": -0.422550261,
+                        "show": -0.350751877,
+                        "today": -0.183177948,
+                        "is": -0.173863158,
+                        "exit": -0.173863158,
+                        "status": -0.173863158,
+                        "busiest": -0.114578038,
+                        "hour": -0.167573959,
+                        "most": -0.062310744,
+                        "idl": -0.052995943,
+                        "cours": -0.009314799,
+                        "that": -0.009314799,
+                        "have": -0.009314799,
+                        "student": -0.009314799,
+                        "nonefeature": 10.377100945
+                      }
+                    }
+                  }
+                ],
+                "trainOpts": {
+                  "iterations": 20000,
+                  "errorThresh": 0.00005,
+                  "fixedError": false,
+                  "deltaErrorThresh": 0.000001,
+                  "learningRate": 0.7,
+                  "momentum": 0.5,
+                  "leakyReluAlpha": 0.08,
+                  "maxDecimals": 9,
+                  "log": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extraSentences": [
+      [
+        "en",
+        "hello"
+      ],
+      [
+        "en",
+        "hi"
+      ],
+      [
+        "en",
+        "hey there"
+      ],
+      [
+        "en",
+        "good morning"
+      ],
+      [
+        "en",
+        "good afternoon"
+      ],
+      [
+        "en",
+        "greeting"
+      ],
+      [
+        "en",
+        "tell me about our records"
+      ],
+      [
+        "en",
+        "how can export the records?"
+      ],
+      [
+        "en",
+        "show me today's exit status"
+      ],
+      [
+        "en",
+        "show me the busiest hour"
+      ],
+      [
+        "en",
+        "show me the most idle hour"
+      ],
+      [
+        "en",
+        "show me the course that have the most students today"
+      ]
+    ]
+  },
+  "nerManager": {
+    "settings": {},
+    "threshold": 0.8,
+    "builtins": [
+      "Number",
+      "Ordinal",
+      "Percentage",
+      "Age",
+      "Currency",
+      "Dimension",
+      "Temperature",
+      "DateTime",
+      "PhoneNumber",
+      "IpAddress",
+      "Boolean",
+      "Email",
+      "Hashtag",
+      "URL"
+    ],
+    "namedEntities": {}
+  },
+  "slotManager": {},
+  "responses": {
+    "en": {
+      "greeting": [
+        {
+          "response": "hi, good day!"
+        }
+      ],
+      "records": [
+        {
+          "response": "Our records shows the time in and time out of students that went in the library. We can export the records by clicking the download csv button under Records."
+        }
+      ],
+      "exit status": [
+        {
+          "response": "Fetching today's exit status..."
+        }
+      ],
+      "busiest hour": [
+        {
+          "response": "Fetching the busiest hour..."
+        }
+      ],
+      "idle hour": [
+        {
+          "response": "Fetching the most idle hour..."
+        }
+      ],
+      "highest students in course": [
+        {
+          "response": "Fetching the course with the most students..."
+        }
+      ]
+    }
+  },
+  "actions": {},
+  "utteranceDict": {
+    "?": "help"
+  }
+}
