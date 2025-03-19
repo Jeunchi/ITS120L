@@ -2,9 +2,8 @@
 const express = require("express");
 const mysql = require('mysql');
 const cors = require('cors');
-
-
-
+const { NlpManager } = require('node-nlp');
+const manager = require('./nlp/nlp.config');
 
 const app = express();
 app.use(cors());
@@ -16,9 +15,6 @@ const db = mysql.createConnection({
     password: "",
     database: "signup"
 })
-
-
-
 
 app.post('/signup', (req, res) => {
     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
@@ -156,10 +152,19 @@ app.get('/usersperprogram', async (req, res) => {
 });
 
 //For AI assitant
-app.get ({
-    
 
-})
+(async () => {
+    await manager.train();
+    manager.save();
+})();
+
+app.post('/chat', async (req, res) => {
+    const message = req.body.message;
+    const response = await manager.process('en', message);
+    const answer = response.answer || "Sorry, I don't understand.";
+
+    res.json({ answer: answer });
+});
 
 function Time_out () {
     const sql = `
@@ -219,8 +224,7 @@ function Time_out () {
                     maxCount: maxCount,
                 };
         })
-    });
-    
+    });  
 }
 
 app.listen(8081, ()=> {

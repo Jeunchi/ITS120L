@@ -7,3 +7,4 @@ export const client = new Client()
 export const account = new Account(client);
 export const databases = new Databases(client); // Ensure this is exported
 export { ID, Query };
+
