@@ -8,6 +8,7 @@ import Records from './pages/records';
 import Validator from './pages/validator';
 import PerHour from './pages/perhour';
 import PerCourse from './pages/percourse';
+import Chat from './components/chat';
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/PerCourse" element={<PerCourse />} />        
         <Route path="/" element={<Navigate to="/Login" replace />} /> 
       </Routes>
+      {showChat && <Chat />}
     </div>
   );
 }
