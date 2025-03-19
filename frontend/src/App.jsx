@@ -24,7 +24,7 @@ function App() {
             <Route path="/Validator" element={<Validator />} />
             <Route path="/perhour" element={<PerHour />} />\
             <Route path="/PerCourse" element={<PerCourse />} />
-            <Route path="/" element={<Navigate to="/Login" replace />} /> 
+            <Route path="/" element={<Navigate to="/Validator" replace />} /> 
         </Routes>
       </div>
     </Router>

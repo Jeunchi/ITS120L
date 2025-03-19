@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Records.css';
 import CsvDownloader from 'react-csv-downloader';
+import { databases, Query } from '../lib/appwrite'; // Import from your appwrite config file
 
 function PerCourse() {
     const [data, setData] = useState([]);
@@ -13,19 +14,84 @@ function PerCourse() {
         // Start fade in animation after component mounts
         setFadeIn(true);
         
-        setLoading(true);
-        fetch('http://localhost:8081/usersperprogram')
-            .then(res => res.json())
-            .then(data => {
-                console.log("Frontend received data:", data); // Debugging log
-                setData(data);
+        // Fetch and process data from Appwrite
+        const fetchAndProcessData = async () => {
+            try {
+                setLoading(true);
+                
+                // Replace these with your actual Appwrite database and collection IDs
+                const databaseId = '67da128c00360aebffad';
+                const collectionId = '67da12c50024066b85ca'; // Your collection ID
+                
+                // Get all student log entries
+                const response = await databases.listDocuments(
+                    databaseId,
+                    collectionId,
+                    [
+                        // Optional: Add sorting if needed
+                        Query.orderDesc('date')
+                    ]
+                );
+                
+                console.log("Fetched student logs:", response.documents);
+                
+                // Process the data to group by date and course
+                const processedData = processStudentLogs(response.documents);
+                setData(processedData);
                 setLoading(false);
-            })
-            .catch(err => {
-                console.error("Fetch error:", err);
+            } catch (error) {
+                console.error("Error fetching records:", error);
                 setLoading(false);
-            });
+            }
+        };
+        
+        fetchAndProcessData();
     }, []);
+    
+    // Function to process student logs into course statistics by date
+    const processStudentLogs = (logs) => {
+        // Group logs by date
+        const groupedByDate = {};
+        
+        logs.forEach(log => {
+            // Format the date to use as a key (YYYY-MM-DD)
+            const dateObj = new Date(log.date);
+            const dateKey = dateObj.toISOString().split('T')[0];
+            
+            // Initialize the date entry if it doesn't exist
+            if (!groupedByDate[dateKey]) {
+                groupedByDate[dateKey] = {
+                    Date: dateKey,
+                    ABM: 0,
+                    ACMAN: 0,
+                    ADA: 0,
+                    AMPSY: 0,
+                    BIO: 0,
+                    BMCS: 0,
+                    CS: 0,
+                    CE: 0,
+                    CS_O: 0,
+                    IE: 0,
+                    IE_O: 0,
+                    IS: 0,
+                    IT: 0,
+                    GrandTotal: 0
+                };
+            }
+            
+            // Increment the count for this course
+            const course = log.course;
+            if (course && groupedByDate[dateKey].hasOwnProperty(course)) {
+                groupedByDate[dateKey][course]++;
+            }
+            
+            // Increment the grand total regardless of course
+            groupedByDate[dateKey].GrandTotal++;
+        });
+        
+        // Convert the object to an array
+        return Object.values(groupedByDate);
+    };
     
     // Modified filter function to match your data structure
     const filteredData = searchTerm === '' ? data : data.filter(record => {
