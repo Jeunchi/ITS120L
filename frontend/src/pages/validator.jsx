@@ -17,7 +17,8 @@ function Validator() {
         timeout: '',
         date: ''
     });
-    
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [existingDocId, setExistingDocId] = useState(null);
@@ -101,8 +102,12 @@ function Validator() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+    
+        if (loading) return; // Prevent multiple submissions
+        setLoading(true); // Disable button
+    
         const currentTime = getCurrentTime();
-
+    
         try {
             if (formState === 'checkin') {
                 if (!existingDocId) {
@@ -128,13 +133,15 @@ function Validator() {
                 });
                 setFormState('checkin');
             }
-
+    
             resetForm();
         } catch (error) {
             console.error("Error processing request:", error);
+        } finally {
+            setLoading(false); // Re-enable button after processing
         }
     };
-
+    
     const resetForm = () => {
         setValues({
             studentNumber: '',
@@ -149,6 +156,7 @@ function Validator() {
         setExistingDocId(null);
     };
 
+    
     return (
         <motion.div 
             className="flex items-center justify-center min-h-screen bg-gray-900"
